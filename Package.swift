@@ -22,9 +22,12 @@ let package = Package(
         .target(
             name: "SwiftTimeZoneLookup",
             dependencies: ["CZoneDetect"],
-            resources: [.process("Resources")]),
+            // Excluding Resources since it's not correctly being picked up, and gets copied once per target
+            // resources: [.process("Resources")]),
+            resources: []),
         .testTarget(
             name: "SwiftTimeZoneLookupTests",
-            dependencies: ["SwiftTimeZoneLookup"]),
+            dependencies: ["SwiftTimeZoneLookup"],
+            resources: [.copy("Maps/timezone16.bin"), .copy("Maps/timezone21.bin")]),
     ]
 )

@@ -3,7 +3,12 @@ import SwiftTimeZoneLookup
 
 final class SwiftTimeZoneLookupTests: XCTestCase {
     func testLookup() throws {
-        let database = try SwiftTimeZoneLookup()
+        
+        let bundle = Bundle.module
+        let timezone16 = try XCTUnwrap(bundle.url(forResource: "timezone16", withExtension: "bin"))
+        let timezone21 = try XCTUnwrap(bundle.url(forResource: "timezone21", withExtension: "bin"))
+        
+        let database = try SwiftTimeZoneLookup(timezone16: timezone16, timezone21: timezone21)
         XCTAssertEqual(database.simple(latitude: 47.5, longitude: 8.6), "Europe/Zurich")
         XCTAssertEqual(database.simple(latitude: 47.5, longitude: -2.6), "Europe/Paris")
         XCTAssertEqual(database.simple(latitude: 47.5, longitude: -8.6), "Etc/GMT+1")
